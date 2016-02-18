@@ -19,9 +19,22 @@ public class FragmentA extends Fragment implements View.OnClickListener {
     FragmentCommunicator fc;
     //Attaching fragment_a with Java file
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState==null){
+          counter = 0;
+        }
+
+        else {
+            savedInstanceState.getInt("Counter",0);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_a,container,false);
+        return inflater.inflate(R.layout.fragment_a, container, false);
     }
 
     @Override
@@ -30,6 +43,13 @@ public class FragmentA extends Fragment implements View.OnClickListener {
         fc = (FragmentCommunicator) getActivity();
         button = (Button) getActivity().findViewById(R.id.button);
         button.setOnClickListener(this);
+    }
+
+    //Saving the instance of the Fragment on activity orientation change.
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("Counter",counter);
     }
 
     @Override
